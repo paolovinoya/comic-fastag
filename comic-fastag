@@ -1,0 +1,228 @@
+#!/bin/bash
+
+volumetagging()
+{
+for i in vol*.cbz;
+do
+        vol=$(echo $i|cut -d "." -f 1|sed 's/vol//');
+        comictagger -t cr -s -m "series=$title,volume=$vol,credit=Writer:$writer,credit=Penciller:$penciller,credit=Inker:$inker" $i
+done
+}
+
+chaptertagging()
+{
+for i in c*.cbz;
+do
+        vol=$(echo $i|cut -d "." -f 1|sed 's/c//');
+        comictagger -t cr -s -m "series=$title,issue=$vol,credit=Writer:$writer,credit=Penciller:$penciller,credit=Inker:$inker" $i
+done
+}
+
+artisttagging()
+{
+OLDIFS=$IFS
+IFS=$'\n'
+for i in *.cbz;
+do
+	title=$(basename $i .cbz);
+	comictagger -t cr -s -m "series=$title,credit=Penciller:$penciller,credit=Inker:$inker" $i
+done
+IFS=$OLDIFS
+
+}
+
+generateRLmobi()
+{
+OLDIFS=$IFS
+IFS=$'\n'
+rm *.mobi
+for i in *.cbz;
+do
+	echo GENERATING MOBI : $i
+	kcc-c2e -p KV -m -u -r2 "$i";
+done
+IFS=$OLDIFS
+}
+
+generateLRmobi()
+{
+OLDIFS=$IFS
+IFS=$'\n'
+rm *.mobi
+for i in *.cbz;
+do
+        echo GENERATING MOBI : $i
+        kcc-c2e -p KV -u -r2 "$i";
+done
+IFS=$OLDIFS
+}
+
+
+generatewebmobi()
+{
+OLDIFS=$IFS
+IFS=$'\n'
+rm *.mobi
+for i in *.cbz;
+do
+	echo GENERATING MOBI in WEBMODE : $i
+	kcc-c2e -p KV -w -b0 "$i";
+done
+IFS=$OLDIFS
+}
+
+delXML()
+{
+	OLDIFS=$IFS
+	IFS=$'\n';
+	for i in *.cbz;
+	do
+		7z d $i ComicInfo.xml
+	done
+	IFS=$OLDIFS
+}
+
+
+printhelp()
+{
+printf "
+Tool for generating bulk tagging for chapters and volumes\n
+ tagvol - Tag all volumes
+ tagchap - Tag all chapters
+ tagart - Tag all files with artist name
+ renchap - Rename all chapters according to config file
+ renvol - Rename all volumes according to config file
+ rennh - Insert artist on all cbz filenames
+ zipall - Zip all links as separate files according to filename
+ zip2cbz - Rename all zip to cbz
+ cbz2zip - Rename all cbz to zip
+ editconf - Edit configuration file
+ generateLRmobi - Batch convert all cbz to mobi (Western Mode)
+ generateRLmobi - Batch convert all cbz to mobi (Manga Mode)
+ generatewebmobi - Batch convert all cbz to mobi using webmode
+ delXML - Remove all ComicInfo.xml from all cbz files
+ init - Create a config file for editing
+ \n"
+}
+
+createconfig()
+{
+	echo #This is the comic-fastag configuration file
+	echo #Fill in the variables with the correct information, in order to tag cbz files correctly
+echo title=\"Unknown\" > .bulk-rename.conf
+echo writer=\"Unknown\" >> .bulk-rename.conf
+echo inker=\"Unknwon\" >> .bulk-rename.conf
+echo penciller=\$inker >> .bulk-rename.conf
+}
+
+chapterrename()
+{
+OLDIFS=$IFS;
+IFS=$'\n';
+for i in c*.cbz;
+do
+	vol=$(echo $i|cut -d "." -f 1|sed 's/c//');
+	mv $i "[$inker] $title c$vol.cbz"
+done
+IFS=$OLDIFS
+}
+
+volumerename()
+{
+OLDIFS=$IFS;
+IFS=$'\n';
+for i in vol*.cbz
+do
+	vol=$(echo $i|cut -d "." -f 1|sed 's/vol//');
+	mv $i "[$inker] $title V$vol.cbz"
+done
+IFS=$OLDIFS
+}
+
+zipall()
+{
+OLDIFS=$IFS;
+IFS=$'\n';
+for i in $(ls -d *);
+do
+	7z a -l $i.zip $i
+done
+IFS=$OLDIFS;
+}
+
+zip2cbz()
+{
+	rename 's/.zip/.cbz/' *.zip
+}
+
+cbz2zip()
+{
+	rename 's/.cbz/.zip/' *.cbz
+}
+
+editconf()
+{
+	vi .bulk-rename.conf
+}
+
+nhrename()
+{
+OLDIFS=$IFS;
+IFS=$'\n';
+for i in *.cbz
+do
+	mv $i "[$inker] $i"
+done
+IFS=$OLDIFS
+}
+
+if [ -f ./.bulk-rename.conf ]
+then
+
+source ./.bulk-rename.conf
+echo "Title of series is : " $title
+echo "Writer is : " $writer
+echo "Penciller is : " $penciller
+echo "Inker is : " $inker
+case "$1" in 
+	"tagvol" ) volumetagging
+		;;
+	"tagchap" ) chaptertagging
+		;;
+	"tagart" ) artisttagging
+		;;
+	"renchap" ) chapterrename
+		;;
+	"renvol" ) volumerename
+		;;
+	"rennh" ) nhrename
+		;;
+	"zipall" ) zipall
+		;;
+	"zip2cbz" ) zip2cbz
+		;;
+	"cbz2zip" ) cbz2zip
+		;;
+	"generateLRmobi" ) generateLRmobi
+		;;
+	"generateRLmobi" ) generateRLmobi
+		;;
+	"generatewebmobi" ) generatewebmobi
+		;;
+	"editconf" ) editconf
+		;;
+	"delXML" ) delXML
+		;;
+	* ) printhelp
+		;;
+
+esac
+elif [ "$1" = init ]
+then
+	createconfig
+elif [ "$1" = help ]
+then
+	printhelp
+else
+	echo "bulk-rename.conf not found. Run $0 init to generate the file. Edit details before running!!"
+fi
