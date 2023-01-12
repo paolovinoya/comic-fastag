@@ -17,19 +17,44 @@ To make the script function for the first time in any directory, it needs to dep
 - See the contents by typing `cat .bulk-rename.conf`
 
 ## Directory structure
-`
-structured
-├── 01
-│   ├── 01-001.0-001.jpg
-│   ├── 01-001.0-002.jpg
-│   ├── 01-001.0-003.jpg
-|    ...
-└── 02
-    ├── 02-005.0-001.jpg
-    ├── 02-005.0-002.jpg
-    ├── 02-005.0-003.jpg
-    ...
-    └── 02-009.0-033.jpg
- `   
-    
+```
+user@testbuild:~/ebook-workshop/structured$ comic-fastag zipall
+Title of series is :  Test Comic Series name
+Writer is :  Mr Writer
+Penciller is :  Mr Inker
+Inker is :  Mr Inker
+
+7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+p7zip Version 16.02 (locale=C.UTF-8,Utf16=on,HugeFiles=on,64 bits,8 CPUs AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx   (810F81),ASM,AES-NI)
+
+Scanning the drive:
+1 folder, 164 files, 148136231 bytes (142 MiB)
+
+Creating archive: vol01.zip
+
+Items to compress: 165
+
+
+Files read from disk: 164
+Archive size: 142636545 bytes (137 MiB)
+Everything is Ok
+
+7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+p7zip Version 16.02 (locale=C.UTF-8,Utf16=on,HugeFiles=on,64 bits,8 CPUs AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx   (810F81),ASM,AES-NI)
+
+Scanning the drive:
+1 folder, 162 files, 197740861 bytes (189 MiB)
+
+Creating archive: vol02.zip
+
+Items to compress: 163
+
+
+Files read from disk: 162
+Archive size: 193643625 bytes (185 MiB)
+Everything is Ok
+user@testbuild:~/ebook-workshop/structured$ ls
+vol01  vol01.zip  vol02  vol02.zip
+user@testbuild:~/ebook-workshop/structured$
+```
     
