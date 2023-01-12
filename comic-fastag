@@ -1,5 +1,7 @@
 #!/bin/bash
 
+configfile=.comic-fastag.conf
+
 volumetagging()
 {
 for i in vol*.cbz;
@@ -107,12 +109,12 @@ Tool for generating bulk tagging for chapters and volumes\n
 
 createconfig()
 {
-	echo #This is the comic-fastag configuration file > .comic-fastag.conf
-	echo #Fill in the variables with the correct information, in order to tag cbz files correctly >> .comic-fastag.conf
-echo title=\"Unknown\" >> .comic-fastag.conf
-echo writer=\"Unknown\" >> .comic-fastag.conf
-echo inker=\"Unknwon\" >> .comic-fastag.conf
-echo penciller=\$inker >> .comic-fastag.conf
+	echo #This is the comic-fastag configuration file > $configfile
+	echo #Fill in the variables with the correct information, in order to tag cbz files correctly >> $configfile
+echo title=\"Unknown\" >> $configfile
+echo writer=\"Unknown\" >> $configfile
+echo inker=\"Unknwon\" >> $configfile
+echo penciller=\$inker >> $configfile
 }
 
 chapterrename()
@@ -176,10 +178,10 @@ done
 IFS=$OLDIFS
 }
 
-if [ -f ./.bulk-rename.conf ]
+if [ -f ./$configfile ]
 then
 
-source ./.bulk-rename.conf
+source ./$configfile
 echo "Title of series is : " $title
 echo "Writer is : " $writer
 echo "Penciller is : " $penciller
@@ -224,5 +226,5 @@ elif [ "$1" = help ]
 then
 	printhelp
 else
-	echo "bulk-rename.conf not found. Run $0 init to generate the file. Edit details before running!!"
+	echo "$configfile not found. Run $0 init to generate the file. Edit details before running!!"
 fi
