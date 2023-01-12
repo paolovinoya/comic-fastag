@@ -107,12 +107,12 @@ Tool for generating bulk tagging for chapters and volumes\n
 
 createconfig()
 {
-	echo #This is the comic-fastag configuration file
-	echo #Fill in the variables with the correct information, in order to tag cbz files correctly
-echo title=\"Unknown\" > .bulk-rename.conf
-echo writer=\"Unknown\" >> .bulk-rename.conf
-echo inker=\"Unknwon\" >> .bulk-rename.conf
-echo penciller=\$inker >> .bulk-rename.conf
+	echo #This is the comic-fastag configuration file > .comic-fastag.conf
+	echo #Fill in the variables with the correct information, in order to tag cbz files correctly >> .comic-fastag.conf
+echo title=\"Unknown\" >> .comic-fastag.conf
+echo writer=\"Unknown\" >> .comic-fastag.conf
+echo inker=\"Unknwon\" >> .comic-fastag.conf
+echo penciller=\$inker >> .comic-fastag.conf
 }
 
 chapterrename()
@@ -162,7 +162,7 @@ cbz2zip()
 
 editconf()
 {
-	vi .bulk-rename.conf
+	vi .comic-fastag.conf
 }
 
 artrename()
