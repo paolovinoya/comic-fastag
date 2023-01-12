@@ -16,8 +16,37 @@ To make the script function for the first time in any directory, it needs to dep
 - Run `comic-fastag init`
 - See the contents by typing `cat .bulk-rename.conf`
 
+## Command Tasks
+```
+Tool for generating bulk tagging for chapters and volumes
+
+ tagvol - Tag all volumes
+ tagchap - Tag all chapters
+ tagart - Tag all files with artist name
+ renchap - Rename all chapters according to config file
+ renvol - Rename all volumes according to config file
+ renart - Insert artist on all cbz filenames
+ zipall - Zip all directories as separate files according to filename
+ zip2cbz - Rename all zip to cbz
+ cbz2zip - Rename all cbz to zip
+ editconf - Edit configuration file
+ generateLRmobi - Batch convert all cbz to mobi (Western Mode)
+ generateRLmobi - Batch convert all cbz to mobi (Manga Mode)
+ generatewebmobi - Batch convert all cbz to mobi using webtoon mode
+ delXML - Remove all ComicInfo.xml from all cbz files
+ init - Create a config file for editing
+```
+- tagvol - Tag all volumes found in the current directory. Note that only cbz files with vol prefix name will be tagged.
+- tagchap - Tag all chapters found in the current directory. Note that only cbz files with c prefix name will be tagged.
+- tagart - Tag all cbz files found in the current directory. Series tag will be ignored. Instead, the title name will be used as the series name.
+- renvol - Rename the filename of any volXX.cbz files with format "[Artist] Series name VXX.cbz"
+- renchap - Rename the filename of any cXXX.cbz files with format "[Artist] Series name cXXX.cbz"
+- renart - Rename the filename of any cbz file with format "[Artist] Filename.cbz"
+
 ## Directory structure
 ```
+user@testbuild:~/ebook-workshop/structured$ ls
+vol01  vol02
 user@testbuild:~/ebook-workshop/structured$ comic-fastag zipall
 Title of series is :  Test Comic Series name
 Writer is :  Mr Writer
