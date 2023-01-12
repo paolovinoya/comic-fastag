@@ -92,14 +92,14 @@ Tool for generating bulk tagging for chapters and volumes\n
  tagart - Tag all files with artist name
  renchap - Rename all chapters according to config file
  renvol - Rename all volumes according to config file
- rennh - Insert artist on all cbz filenames
- zipall - Zip all links as separate files according to filename
+ renart - Insert artist on all cbz filenames
+ zipall - Zip all directories as separate files according to filename
  zip2cbz - Rename all zip to cbz
  cbz2zip - Rename all cbz to zip
  editconf - Edit configuration file
  generateLRmobi - Batch convert all cbz to mobi (Western Mode)
  generateRLmobi - Batch convert all cbz to mobi (Manga Mode)
- generatewebmobi - Batch convert all cbz to mobi using webmode
+ generatewebmobi - Batch convert all cbz to mobi using webtoon mode
  delXML - Remove all ComicInfo.xml from all cbz files
  init - Create a config file for editing
  \n"
@@ -165,7 +165,7 @@ editconf()
 	vi .bulk-rename.conf
 }
 
-nhrename()
+artrename()
 {
 OLDIFS=$IFS;
 IFS=$'\n';
@@ -195,7 +195,7 @@ case "$1" in
 		;;
 	"renvol" ) volumerename
 		;;
-	"rennh" ) nhrename
+	"renart" ) artrename
 		;;
 	"zipall" ) zipall
 		;;
