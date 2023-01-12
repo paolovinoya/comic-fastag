@@ -15,3 +15,21 @@ Comictagger command-line syntax was difficult replicate against multiple comic b
 To make the script function for the first time in any directory, it needs to deposit its blank configuration as a hidden file.
 - Run `comic-fastag init`
 - See the contents by typing `cat .bulk-rename.conf`
+
+## Directory structure
+`
+structured
+├── 01
+│   ├── 01-001.0-001.jpg
+│   ├── 01-001.0-002.jpg
+│   ├── 01-001.0-003.jpg
+|    ...
+└── 02
+    ├── 02-005.0-001.jpg
+    ├── 02-005.0-002.jpg
+    ├── 02-005.0-003.jpg
+    ...
+    └── 02-009.0-033.jpg
+ `   
+    
+    
