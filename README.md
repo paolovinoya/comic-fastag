@@ -1,5 +1,5 @@
 # comic-fastag
-Quickly tag all zip files into a pre-set Series-name, Author, Penciller and Inker
+Quickly tag all zip files into a pre-set Series-name, Writer, Penciller and Inker. The tool kcc-c2e will identify the title of the epub/mobi file with the Series field name. Writer, Penciller and Inker will be considered as authors of the same series. 
 
 ## Required/Dependencies
 ### Python projects
